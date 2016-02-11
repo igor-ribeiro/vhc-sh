@@ -22,10 +22,9 @@ echo "        Require all granted" >> /etc/apache2/sites-available/$1.conf
 echo "    </Directory>" >> /etc/apache2/sites-available/$1.conf
 echo "</VirtualHost>" >> /etc/apache2/sites-available/$1.conf
 
-a2ensite -q $1.conf
-
 echo "127.0.0.1 $1" >> /etc/hosts
 
+a2ensite -q $1.conf
 service apache2 reload
 
 echo "Virtual host '$1' created"
