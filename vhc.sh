@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 if [ -z "$1" ]
     then
@@ -12,15 +12,17 @@ if [ -z "$2" ]
         exit 1
 fi
 
-echo "<VirtualHost *:80>" >> /etc/apache2/sites-available/$1.conf
-echo "    ServerName $1" >> /etc/apache2/sites-available/$1.conf
-echo "    DocumentRoot $2" >> /etc/apache2/sites-available/$1.conf
-echo "    <Directory $2>" >> /etc/apache2/sites-available/$1.conf
-echo "        Options Indexes FollowSymLinks" >> /etc/apache2/sites-available/$1.conf
-echo "        AllowOverride All" >> /etc/apache2/sites-available/$1.conf
-echo "        Require all granted" >> /etc/apache2/sites-available/$1.conf
-echo "    </Directory>" >> /etc/apache2/sites-available/$1.conf
-echo "</VirtualHost>" >> /etc/apache2/sites-available/$1.conf
+FILE="<VirtualHost *:80>
+\n\tServerName $1
+\n\tDocumentRoot $2
+\n\t<Directory $2>
+\n\t\tOptions Indexes FollowSymLinks
+\n\t\tAllowOverride All
+\n\t\tRequire all granted
+\n\t</Directory>
+\n</VirtualHost>"
+
+echo $FILE > /etc/apache2/sites-available/$1.conf
 
 echo "127.0.0.1 $1" >> /etc/hosts
 
